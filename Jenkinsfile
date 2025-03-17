@@ -38,9 +38,9 @@ environment {
           		  steps {
                 		echo "Deploying to staging environment..."
               				  // Add your deployment steps here
-				input {
-				  message 'Hi...there!!! wanna continue'
-				}
+				script {
+                   			 input message: "Proceed to Production?", ok: "Deploy"
+               			 }
 		        }
      		  }
 		    stage('Production Deployment') {
@@ -48,19 +48,17 @@ environment {
 				branch 'production'
             		}
           		  steps {
-              			  script {
-                  			  input message: "Proceed to Production?", ok: "Deploy"
-              			  }
           			      echo "Deploying to production environment..."
             			    // Add your production deployment steps here
            		 }
       		  }
  	   }
-post {
-       			always {
-        	 	   echo "Pipeline complete for branch: $PROJECT_NAME"
-       			 }
-        		success {
-           		 echo "Pipeline succeeded!"
-     			 }
+			post {
+       				always {
+        	 		   echo "Pipeline complete for branch: $PROJECT_NAME"
+       				 }
+        			success {
+           				 echo "Pipeline succeeded!"
+     				 }
+			}
 }
